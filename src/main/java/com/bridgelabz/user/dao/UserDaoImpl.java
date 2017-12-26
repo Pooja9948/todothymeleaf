@@ -1,8 +1,10 @@
 package com.bridgelabz.user.dao;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bridgelabz.user.model.UserDetails;
@@ -49,7 +51,24 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 
-	
+
+	@Override
+	public UserDetails loginUser(UserDetails userDetails) {
+		System.out.println("inside login user");
+		Session session = sessionFactory.openSession();
+		@SuppressWarnings("deprecation")
+		Criteria criteria = session.createCriteria(UserDetails.class);
+		criteria.add(Restrictions.eq("email", userDetails.getEmail()));
+		criteria.add(Restrictions.eq("password", userDetails.getPassword()));
+		criteria.add(Restrictions.eq("isActivated", true));
+		UserDetails user = (UserDetails) criteria.uniqueResult();
+
+		if (user == null) {
+			return null;
+
+		}
+		return user;
+	}
 
 
 }

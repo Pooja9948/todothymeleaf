@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.bridgelabz.user.dao.UserDao;
 import com.bridgelabz.user.model.UserDetails;
 
-
 /**
  * @author Pooja todoApp
  *
@@ -19,5 +18,9 @@ public class UserServiceImpl implements UserService {
 
 	public int createUser(UserDetails user) {
 		return userdao.registration(user);
+	}
+
+	public UserDetails loginUser(UserDetails user) {
+		return userdao.loginUser(user);
 	}
 }

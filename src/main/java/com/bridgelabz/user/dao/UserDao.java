@@ -7,13 +7,17 @@ import com.bridgelabz.user.model.UserDetails;
  *
  */
 public interface UserDao {
-	
+
 	/**
 	 * @param userDetails
-	 * @return
-	 * register the user by userDetails object
+	 * @return register the user by userDetails object
 	 */
 	public int registration(UserDetails userDetails);
 
-	
+	/**
+	 * @param user
+	 * @return checking the user is exist or not
+	 */
+	public UserDetails loginUser(UserDetails user);
+
 }

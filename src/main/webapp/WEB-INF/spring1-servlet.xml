@@ -59,6 +59,7 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.bridgelabz.user.model.UserDetails</value>
+				<value>com.bridgelabz.note.model.NoteDetails</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -69,10 +70,33 @@
 			</props>
 		</property>
 	</bean>
-
-
-	<bean id="userdao" class="com.bridgelabz.user.dao.UserDaoImpl"></bean>
 	
+	 <!--<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="username" value="om4java@gmail.com" />
+		<property name="password" value="forgiveme" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.socketFactory.port">465</prop>
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+				<prop key="mail.smtp.port">465</prop>
+			</props>
+		</property>
+	</bean>
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/**" />
+			<bean class="com.bridgelabz.util.TokenIntercepter" />
+		</mvc:interceptor>
+	</mvc:interceptors> -->
+	<bean id="userdao" class="com.bridgelabz.user.dao.UserDaoImpl"></bean>
 	<bean id="userservice" class="com.bridgelabz.user.service.UserServiceImpl"></bean>
+	<bean id="noteService" class="com.bridgelabz.note.service.NoteServiceImpl" />
+	<bean id="notedao" class="com.bridgelabz.note.dao.NoteDaoImpl" />
+	<bean id="encryption" class="com.bridgelabz.util.PasswordEncryption" />
+	<!-- <bean id="mailMail" class="com.bridgelabz.util.SendMail">
+		<property name="mailSender" ref="mailSender" />
+	</bean> -->
 
 </beans>

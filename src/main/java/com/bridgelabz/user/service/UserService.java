@@ -10,9 +10,13 @@ public interface UserService {
 
 	/**
 	 * @param user
-	 * @return
-	 * create user
+	 * @return create user
 	 */
 	public int createUser(UserDetails user);
 
+	/**
+	 * @param user
+	 * @return checking the user is exist or not
+	 */
+	public UserDetails loginUser(UserDetails user);
 }
