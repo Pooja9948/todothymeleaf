@@ -1,7 +1,10 @@
-.admin-message-text {
+/* .admin-message-text {
 	font-style: normal;
 	font-size: 22px;
-	color: #004080;
+	
+} */
+.m{
+	background-color: green;
 }
 /* #content-wrapper-inside {
 	margin: 0 auto;

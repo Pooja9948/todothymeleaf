@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Home Page</title>
+<!-- <link rel="stylesheet" type="text/css" href="../css/home.css" th:href="@{../css/home.css}" /> -->
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+	<link rel="stylesheet" href="/css/home.css"/>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	
+
+</head>
+
+<body>
+	<div class="m">
+
+		<form th:action="@{/logout}" method="get">
+			<button class="btn btn-md btn-danger btn-block" name="registration"
+				type="Submit">Logout</button>
+		</form>
+
+		<div style="margin-top: 40px">
+			<div>
+				<div>
+					<span th:utext="${userName}"></span>
+				</div>
+				<p class="admin-message-text text-center"
+					th:utext="${successMessage}"></p>
+			</div>
+		</div>
+		<div class="container">
+			<button type="button" data-toggle="modal" data-target="#myModal">Add-Note</button>
+
+			<div class="modal fade" id="myModal" role="dialog">
+				<div class="modal-dialog">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Add new Note</h4>
+						</div>
+						<div class="modal-body">
+							<form action="#" th:action="@{/note/}" th:object="${note}"
+								method="POST">
+								<input type="text" th:field="*{title}" /><br /> <input
+									type="text" th:field="*{description}" /><br /> <input
+									type="submit" th:value="submit" />
+							</form>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		
+		<div>
+		<h3>User Notes</h3>
+		<div th:each="note : ${notes}" class="card">
+		 	<div th:text="${note.title}"></div>
+		 	<div th:text="${note.description}"></div>
+		 	<button type="button" data-toggle="modal" data-target="#myModal1">Edit</button>
+		 	<div class="modal fade" id="myModal1" role="dialog">
+				<div class="modal-dialog">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Edit Note</h4>
+						</div>
+						<div class="modal-body">
+							<form action="#" th:action="@{/note/updateNote}" th:object="${note}"
+								method="POST">
+								<input type="text" th:field="*{title}" /><br /> <input
+									type="text" th:field="*{description}" /><br /> <input
+									type="submit" th:value="submit" />
+							</form>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		 	<button onclick="deleteNote('note')">Delete</button>
+		</div>
+		</div>
+		
+	</div>
+</body>
+</html>

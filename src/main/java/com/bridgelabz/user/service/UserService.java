@@ -19,4 +19,7 @@ public interface UserService {
 	 * @return checking the user is exist or not
 	 */
 	public UserDetails loginUser(UserDetails user);
+
+	public UserDetails getUserByEmail(String email);
+
 }

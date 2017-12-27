@@ -20,4 +20,7 @@ public interface UserDao {
 	 */
 	public UserDetails loginUser(UserDetails user);
 
+	public UserDetails getUserByEmail(String email);
+	
+	
 }

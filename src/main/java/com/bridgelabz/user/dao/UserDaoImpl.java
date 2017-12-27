@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bridgelabz.user.model.UserDetails;
 
-
 /**
  * @author Pooja todoApp
  *
@@ -26,9 +25,8 @@ public class UserDaoImpl implements UserDao {
 
 	private static final String key = "Token";
 
-	//private HashOperations<String, String, Token> hashops;
+	// private HashOperations<String, String, Token> hashops;
 
-	
 	public int registration(UserDetails userDetails) {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
@@ -51,7 +49,6 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 
-
 	@Override
 	public UserDetails loginUser(UserDetails userDetails) {
 		System.out.println("inside login user");
@@ -70,5 +67,15 @@ public class UserDaoImpl implements UserDao {
 		return user;
 	}
 
+	@Override
+	public UserDetails getUserByEmail(String email) {
+		Session session = sessionFactory.openSession();
+		@SuppressWarnings("deprecation")
+		Criteria criteria = session.createCriteria(UserDetails.class);
+		criteria.add(Restrictions.eq("email", email));
+		UserDetails user = (UserDetails) criteria.uniqueResult();
+		session.close();
+		return user;
 
+	}
 }

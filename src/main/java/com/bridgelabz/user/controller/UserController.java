@@ -1,5 +1,7 @@
 package com.bridgelabz.user.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bridgelabz.note.model.NoteDetails;
+import com.bridgelabz.note.service.NoteService;
 import com.bridgelabz.user.model.UserDetails;
 import com.bridgelabz.user.service.UserService;
 import com.bridgelabz.util.PasswordEncryption;
@@ -34,7 +37,10 @@ public class UserController {
 
 	@Autowired
 	PasswordEncryption encryption;
-
+	
+	@Autowired
+	NoteService noteService;
+	
 	/**
 	 * @return registerpage.html
 	 */
@@ -93,8 +99,10 @@ public class UserController {
 		user.setPassword(PasswordEncryption.encryptedPassword(user.getPassword()));
 		session.setAttribute("user", user);
 		user = userservice.loginUser(user);
+		List<NoteDetails> notes=noteService.getAllNotes(user);
 		if(user!=null) {
 			modelAndView.addObject("note", new NoteDetails());
+			modelAndView.addObject("notes", notes);
 			modelAndView.addObject("successMessage", "User is logged in");
 			modelAndView.addObject("userName", "Welcome " + user.getFirstname() + " " + user.getLastname() + " (" + user.getEmail() + ")");
 			modelAndView.setViewName("homepage");
