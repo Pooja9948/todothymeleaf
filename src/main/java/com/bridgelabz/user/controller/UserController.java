@@ -24,7 +24,6 @@ import com.bridgelabz.util.token.GenerateToken;
  *
  */
 @Controller
-@RequestMapping("/user")
 public class UserController {
 
 	// public static Logger logger = Logger.getLogger(UserController.class);
@@ -96,8 +95,11 @@ public class UserController {
 	@RequestMapping(value = "/loginUser", method = RequestMethod.POST)
 	public ModelAndView checkLoginUser(@Valid UserDetails user,HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
+		String activeToken = GenerateToken.generateToken(user.getId());
+		System.out.println("inside login user token "+activeToken);
 		user.setPassword(PasswordEncryption.encryptedPassword(user.getPassword()));
 		session.setAttribute("user", user);
+		session.setAttribute("token", activeToken);
 		user = userservice.loginUser(user);
 		List<NoteDetails> notes=noteService.getAllNotes(user);
 		if(user!=null) {

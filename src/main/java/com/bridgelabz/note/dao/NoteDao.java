@@ -23,5 +23,6 @@ public interface NoteDao {
 
 	public List<NoteDetails> getAllNotes(UserDetails user);
 	
-	
+	int getUserByNoteId(int noteid);
+	public void deleteNote(int noteId);
 }

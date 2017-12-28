@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.hibernate.criterion.Order;
 import com.bridgelabz.note.model.NoteDetails;
@@ -59,5 +60,33 @@ public class NoteDaoImpl implements NoteDao {
 			session.close();
 		}
 		return null;
+	}
+	@Override
+	public int getUserByNoteId(int noteid) {
+		Session session = sessionfactory.openSession();
+		NoteDetails noteDetails = session.get(NoteDetails.class, noteid);
+		System.out.println("User by id is: " + noteDetails);
+		session.close();
+		return noteDetails.getId();
+		
+	}
+	public void deleteNote(int noteId) {
+		Session session = sessionfactory.openSession();
+
+		System.out.println("jhdbvj " + noteId);
+		try {
+			transaction = session.beginTransaction();
+			Query deleteNote = session.createQuery("delete from NoteDetails where id=:noteId");
+			deleteNote.setParameter("noteId", noteId);
+
+			deleteNote.executeUpdate();
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
+
 	}
 }

@@ -26,5 +26,10 @@ public class NoteServiceImpl implements NoteService {
 	public List<NoteDetails> getAllNotes(UserDetails user){
 		return noteDao.getAllNotes(user);
 	}
-	
+	public int getUserByNoteId(int noteid) {
+		return noteDao.getUserByNoteId(noteid);
+	}
+	public void deleteNote(int noteId) {
+		noteDao.deleteNote(noteId);
+	}
 }

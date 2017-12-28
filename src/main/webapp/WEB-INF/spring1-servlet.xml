@@ -24,11 +24,11 @@
 	<mvc:annotation-driven />
 
 	<mvc:resources location="/css/" mapping="/css/**" />
-	
+	<mvc:resources location="/script/" mapping="/script/**" />
 	
 	<bean id="templateResolver"
 		class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
-		<property name="prefix" value="/template/" />
+		<property name="prefix" value="/WEB-INF/template/" />
 		<property name="suffix" value=".html" />
 		<property name="templateMode" value="HTML5" />
 		
@@ -86,12 +86,16 @@
 			</props>
 		</property>
 	</bean>
-	<mvc:interceptors>
+	 -->
+	 
+	 
+	 <mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/user/**" />
 			<bean class="com.bridgelabz.util.TokenIntercepter" />
 		</mvc:interceptor>
-	</mvc:interceptors> -->
+	</mvc:interceptors>
+	
 	<bean id="userdao" class="com.bridgelabz.user.dao.UserDaoImpl"></bean>
 	<bean id="userservice" class="com.bridgelabz.user.service.UserServiceImpl"></bean>
 	<bean id="noteService" class="com.bridgelabz.note.service.NoteServiceImpl" />

@@ -3,11 +3,14 @@ package com.bridgelabz.note.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,7 +25,7 @@ import com.bridgelabz.user.service.UserService;
  *
  */
 @Controller
-@RequestMapping(value = "/note")
+@RequestMapping(value = "/user")
 public class NoteController {
 
 	@Autowired
@@ -51,6 +54,46 @@ public class NoteController {
 		modelAndView.setViewName("homepage");
 		return modelAndView;
 	}
-
 	
+	@RequestMapping(value = "/deleteNote/{id}", method = RequestMethod.DELETE)
+	public ModelAndView deleteNote(@PathVariable("id") int id, HttpServletRequest request,HttpSession session) {
+		
+		//int id=Integer.valueOf(request.getParameter("noteid"));
+		System.out.println(" hellllllllllloooo"+id);
+		int user_id = (int) request.getAttribute("userId");
+		
+		
+		
+		UserDetails user=(UserDetails) session.getAttribute("user");
+		System.out.println("user "+user.getId());
+		
+		System.out.println("user "+user_id);
+		
+		
+		//int user_id=noteService.getUserByNoteId(id);
+		
+		NoteDetails note = new NoteDetails();
+		note.setId(id);
+		System.out.println("id : " + id);
+		ModelAndView modelAndView = new ModelAndView();
+		if(user.getId()==user_id){
+			noteService.deleteNote(id);
+			System.out.println("note is deleted");
+			modelAndView.addObject("note", new NoteDetails());
+			modelAndView.setViewName("homepage");
+			return modelAndView;
+		}
+		System.out.println("note is not deleted");
+		modelAndView.addObject("note", new NoteDetails());
+		modelAndView.setViewName("homepage");
+		return modelAndView;
+	}
+	@RequestMapping(value = "/hello")
+	public ModelAndView test() {
+		int id=1;
+		System.out.println(" hellllllllllloooo");
+		//int userId = (int) request.getAttribute("userId");
+		return null;
+		
+	}
 }

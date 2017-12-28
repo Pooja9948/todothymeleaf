@@ -2,6 +2,7 @@ package com.bridgelabz.util;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,17 +26,13 @@ public class TokenIntercepter implements HandlerInterceptor {
 			throws Exception {
 
 	}
-
-	/* (non-Javadoc)
-	 * @see org.springframework.web.servlet.HandlerInterceptor#preHandle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object)
-	 * verifying the token , get the user from the token and save it in the request
-	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
 
-		System.out.println("intercepted : "+request.getHeader("token"));
+		HttpSession session = request.getSession(false);
 		
-		int userId = VerifyToken.verifyAccessToken(request.getHeader("token"));
+		
+		int userId = VerifyToken.verifyAccessToken(session.getAttribute("token")+"");
 		if (userId == 0) {
 			response.setStatus(511);
 			return false;

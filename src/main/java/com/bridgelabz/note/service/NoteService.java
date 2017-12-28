@@ -30,10 +30,10 @@ public interface NoteService {
 	*//**
 	 * @param noteId
 	 * deleteNote by noteId
-	 *//*
+	 */
 	public void deleteNote(int noteId);
 
-	*//**
+	/**
 	 * @param noteId
 	 * @return
 	 * get note by noteId
@@ -129,6 +129,6 @@ public interface NoteService {
 	
 	boolean removeNoteId(int id);*/
 	
-	
+	int getUserByNoteId(int noteid);
 	public List<NoteDetails> getAllNotes(UserDetails user);
 }

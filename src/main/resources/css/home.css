@@ -1,12 +1,12 @@
-.admin-message-text {
+/* .admin-message-text {
 	font-style: normal;
 	font-size: 22px;
 	
+} */
+.m{
+	background-color: green;
 }
-.body{
-	background-color: #E6E4E0;
-}
-#content-wrapper-inside {
+/* #content-wrapper-inside {
 	margin: 0 auto;
 	margin-left: 270px;
 	transition: 0.5s;
@@ -60,13 +60,14 @@
 	display: inline-block;
 }
 .card {
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-	transition: 0.3s;
-	border-radius: 5px;
-	background-color: #E6E4E0;
-	font-weight: 100;
-	margin: 15px;
-	padding: 20px
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+    background-color: white;
+    width:300px;
+    font-weight: 100;
+    margin : 15px;
+    padding : 20px
 }
 
 .card:hover {
@@ -161,3 +162,4 @@ img{
 	background-color: white;
 	width: 800px;
 }
+ */
