@@ -29,10 +29,10 @@ public class TokenIntercepter implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
 
-		HttpSession session = request.getSession(false);
 		
+		System.out.println("intercepted : "+request.getHeader("token"));
 		
-		int userId = VerifyToken.verifyAccessToken(session.getAttribute("token")+"");
+		int userId = VerifyToken.verifyAccessToken(request.getHeader("token"));
 		if (userId == 0) {
 			response.setStatus(511);
 			return false;
@@ -41,4 +41,5 @@ public class TokenIntercepter implements HandlerInterceptor {
 		request.setAttribute("userId", userId);
 		return true;
 	}
+
 }

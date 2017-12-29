@@ -57,6 +57,7 @@
 									type="text" th:field="*{description}" /><br /> <input
 									type="submit" th:value="submit" />
 							</form>
+							
 						</div>
 					</div>
 
@@ -64,11 +65,14 @@
 			</div>
 		</div>
 
+
 		<div>
 			<h3>User Notes</h3>
 			<div th:each="note : ${notes}" class="card col-md-3">
 				<div th:text="${note.title}"></div>
 				<div th:text="${note.description}"></div>
+				
+				<button th:onclick="'deleteNote('+ *{note.id} +')'">Delete</button>
 				<button type="button" data-toggle="modal" data-target="#myModal1">Edit</button>
 				<div class="modal fade" id="myModal1" role="dialog">
 					<div class="modal-dialog">
@@ -91,7 +95,7 @@
 
 					</div>
 				</div>
-				<button th:onclick="'deleteNote('+ *{note.id} +')'">Delete</button>
+				
 			</div>
 		</div>
 

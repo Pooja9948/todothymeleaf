@@ -24,7 +24,7 @@ public class GenerateToken {
 		Date expirationTime = new Date(tokenCreationTime.getTime()+1000*60*60);
 		SignatureAlgorithm signatureAlogirthm = SignatureAlgorithm.HS512;
 		JwtBuilder builder = Jwts.builder();
-		builder.setSubject("accessToken");
+		builder.setSubject("token");
 		builder.setIssuedAt(tokenCreationTime);
 		builder.setExpiration(expirationTime);
 		builder.setIssuer(String.valueOf(userId));

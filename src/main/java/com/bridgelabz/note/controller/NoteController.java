@@ -58,10 +58,10 @@ public class NoteController {
 	@RequestMapping(value = "/deleteNote/{id}", method = RequestMethod.DELETE)
 	public ModelAndView deleteNote(@PathVariable("id") int id, HttpServletRequest request,HttpSession session) {
 		
-		//int id=Integer.valueOf(request.getParameter("noteid"));
-		System.out.println(" hellllllllllloooo"+id);
+	
 		int user_id = (int) request.getAttribute("userId");
 		
+		System.out.println("user id is => "+user_id);
 		
 		
 		UserDetails user=(UserDetails) session.getAttribute("user");
@@ -88,6 +88,9 @@ public class NoteController {
 		modelAndView.setViewName("homepage");
 		return modelAndView;
 	}
+	
+	
+	
 	@RequestMapping(value = "/hello")
 	public ModelAndView test() {
 		int id=1;
