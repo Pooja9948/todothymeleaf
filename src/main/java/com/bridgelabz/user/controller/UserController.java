@@ -3,7 +3,6 @@ package com.bridgelabz.user.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -94,15 +93,17 @@ public class UserController {
 	 * @return check the user is exist or not. if exist , go to home page and if not, got to login page
 	 */
 	@RequestMapping(value = "/loginUser", method = RequestMethod.POST)
-	public ModelAndView checkLoginUser(@Valid UserDetails user,HttpSession session , HttpServletResponse response) {
+	public ModelAndView checkLoginUser(@Valid UserDetails user,HttpSession session ,HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView();
-		String activeToken = GenerateToken.generateToken(user.getId());
+		System.out.println("user id in login time --->"+user.getEmail());
+		UserDetails userDetails = userservice.getUserByEmail(user.getEmail());
+		System.out.println("userDetails in login time --->"+userDetails.getId());
+		String activeToken = GenerateToken.generateToken(userDetails.getId());
 		System.out.println("inside login user token "+activeToken);
 		user.setPassword(PasswordEncryption.encryptedPassword(user.getPassword()));
-		//session.setAttribute("user", user);
-		//session.setAttribute("token", activeToken);
-		response.setHeader("token", activeToken);
-		//session.setAttribute("activeToken", activeToken);
+		session.setAttribute("token", activeToken);
+		request.setAttribute("token", activeToken);
+		session.setAttribute("user", userDetails);
 		user = userservice.loginUser(user);
 		List<NoteDetails> notes=noteService.getAllNotes(user);
 		if(user!=null) {

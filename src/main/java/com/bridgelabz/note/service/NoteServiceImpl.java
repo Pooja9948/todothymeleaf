@@ -32,4 +32,7 @@ public class NoteServiceImpl implements NoteService {
 	public void deleteNote(int noteId) {
 		noteDao.deleteNote(noteId);
 	}
+	public void updateNote(NoteDetails noteDetails) {
+		noteDao.updateNote(noteDetails);
+	}
 }

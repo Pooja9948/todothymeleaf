@@ -24,10 +24,10 @@ public interface NoteService {
 	/**
 	 * @param noteDetails
 	 * update notes by using noteDetails
-	 *//*
+	 */
 	public void updateNote(NoteDetails noteDetails);
 
-	*//**
+	/**
 	 * @param noteId
 	 * deleteNote by noteId
 	 */

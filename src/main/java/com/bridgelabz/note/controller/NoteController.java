@@ -9,7 +9,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,13 +63,7 @@ public class NoteController {
 	
 		int user_id = (int) request.getAttribute("userId");
 		
-		System.out.println("user id is => "+user_id);
-		
-		
-		UserDetails user=(UserDetails) session.getAttribute("user");
-		System.out.println("user "+user.getId());
-		
-		System.out.println("user "+user_id);
+		System.out.println("user id is => "+user_id+" note id is "+id);
 		
 		
 		//int user_id=noteService.getUserByNoteId(id);
@@ -76,27 +72,43 @@ public class NoteController {
 		note.setId(id);
 		System.out.println("id : " + id);
 		ModelAndView modelAndView = new ModelAndView();
-		if(user.getId()==user_id){
-			noteService.deleteNote(id);
-			System.out.println("note is deleted");
-			modelAndView.addObject("note", new NoteDetails());
-			modelAndView.setViewName("homepage");
-			return modelAndView;
-		}
-		System.out.println("note is not deleted");
+		
+		noteService.deleteNote(id);
+		System.out.println("note is deleted");
 		modelAndView.addObject("note", new NoteDetails());
 		modelAndView.setViewName("homepage");
 		return modelAndView;
 	}
 	
+	/*@RequestMapping(value="/edit/{id}",method = RequestMethod.GET)
+	public ModelAndView editNote(@PathVariable int id,HttpSession session) {
+		UserDetails noteUser=(UserDetails) session.getAttribute("user");
+		NoteDetails currentNote = noteService.fetchById(id);
+		session.setAttribute("createTime", currentNote.getCreateDate());
+		ModelAndView modelAndView=new ModelAndView();
+		modelAndView.setViewName("noteEdit");
+		modelAndView.addObject("note",currentNote);
+		return modelAndView;
+	}*/
 	
-	
-	@RequestMapping(value = "/hello")
-	public ModelAndView test() {
-		int id=1;
-		System.out.println(" hellllllllllloooo");
-		//int userId = (int) request.getAttribute("userId");
-		return null;
+	@PostMapping(value="/updateNote")
+	public ModelAndView update(@Valid NoteDetails noteDetails,HttpSession session,HttpServletRequest request)
+	{
+		int user_id = (int) request.getAttribute("userId");
+		System.out.println("inside update note");
+		UserDetails user=(UserDetails) session.getAttribute("user");
+		System.out.println("inside update note user emailid is --->"+user.getEmail());
+		UserDetails user1=userservice.getUserByEmail(user.getEmail());
+		System.out.println("users details "+user1.getId()+" "+user1.getFirstname()+" "+user1.getEmail()+" "+user1.getLastname()+" "+user1.getMobileno()+"noteid----> "+noteDetails.getId());
+		noteDetails.setUser(user1);
+		noteService.updateNote(noteDetails);
+		List<NoteDetails> notes=noteService.getAllNotes(user1);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("note", new NoteDetails());
+		modelAndView.addObject("notes", notes);
+		modelAndView.addObject("userName", "Welcome " + user1.getFirstname() + " " + user1.getLastname() + " (" + user1.getEmail() + ")");
+		modelAndView.setViewName("homepage");
+		return modelAndView;
 		
 	}
 }

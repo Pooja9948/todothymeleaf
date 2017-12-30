@@ -1,5 +1,6 @@
 package com.bridgelabz.note.dao;
 
+import java.util.Date;
 import java.util.List;
 
 //import org.apache.log4j.Logger;
@@ -80,6 +81,23 @@ public class NoteDaoImpl implements NoteDao {
 			deleteNote.setParameter("noteId", noteId);
 
 			deleteNote.executeUpdate();
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
+
+	}
+	public void updateNote(NoteDetails noteDetails) {
+		Session session = sessionfactory.openSession();
+
+		try {
+			transaction = session.beginTransaction();
+			Date date = new Date();
+			noteDetails.setModifiedDate(date);
+			session.update(noteDetails);
 			transaction.commit();
 		} catch (Exception e) {
 			if (transaction != null) {

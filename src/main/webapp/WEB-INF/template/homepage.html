@@ -23,11 +23,30 @@
 
 <body>
 	<div>
-
-		<form th:action="@{/logout}" method="get">
+		
+		<div th:fragment="navbar" class="navbar navbar-fixed-top" style="background-color: #ffbb33">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="navbar-inner">
+					
+							<span onclick="toggleNav()" class="glyphicon glyphicon-align-justify"></span>
+							<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+							
+							</div>
+				
+							<button type="button" style="float: right; margin-top: 10px">
+								<a href="#" th:href="@{/logout}">Logout</a>
+							</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<!-- <form th:action="@{/logout}" method="get">
 			<button class="btn btn-md btn-danger btn-block" name="registration"
 				type="Submit">Logout</button>
-		</form>
+		</form> -->
 
 		<div style="margin-top: 40px">
 			<div>
@@ -81,15 +100,16 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">Edit Note</h4>
+								<h4 class="modal-title" >Edit Note</h4>
 							</div>
 							<div class="modal-body">
-								<form action="#" th:action="@{/note/updateNote}"
+								<form action="#" th:action="@{/user/updateNote}"
 									th:object="${note}" method="POST">
-									<input type="text" th:field="*{title}" /><br /> <input
-										type="text" th:field="*{description}" /><br /> <input
+									<!-- <input type="hidden" th:name="id" th:field="*{id}"> -->
+									<input type="text" th:field="*{title}" th:attr="value = ${note.title}" th:name="name" th:id="name"/><br /> <input
+										type="text" th:field="*{description}" th:attr="value = ${note.description}" th:name="description" th:id="description"/><br /> <input
 										type="submit" th:value="submit" />
-								</form>
+								</form>	
 							</div>
 						</div>
 
