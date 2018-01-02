@@ -80,16 +80,16 @@ public class NoteController {
 		return modelAndView;
 	}
 	
-	/*@RequestMapping(value="/edit/{id}",method = RequestMethod.GET)
+	@RequestMapping(value="/editNote/{id}",method = RequestMethod.GET)
 	public ModelAndView editNote(@PathVariable int id,HttpSession session) {
 		UserDetails noteUser=(UserDetails) session.getAttribute("user");
-		NoteDetails currentNote = noteService.fetchById(id);
-		session.setAttribute("createTime", currentNote.getCreateDate());
+		NoteDetails note = noteService.getNoteById(id);
+		session.setAttribute("createTime", note.getCreateddate());
 		ModelAndView modelAndView=new ModelAndView();
 		modelAndView.setViewName("noteEdit");
-		modelAndView.addObject("note",currentNote);
+		modelAndView.addObject("note",note);
 		return modelAndView;
-	}*/
+	}
 	
 	@PostMapping(value="/updateNote")
 	public ModelAndView update(@Valid NoteDetails noteDetails,HttpSession session,HttpServletRequest request)

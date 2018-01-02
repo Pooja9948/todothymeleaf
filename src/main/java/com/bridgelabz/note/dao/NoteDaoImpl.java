@@ -107,4 +107,11 @@ public class NoteDaoImpl implements NoteDao {
 		}
 
 	}
+
+	@Override
+	public NoteDetails getNoteById(int noteId) {
+		Session session = sessionfactory.openSession();
+		NoteDetails note = session.get(NoteDetails.class, noteId);
+		return note;
+	}
 }

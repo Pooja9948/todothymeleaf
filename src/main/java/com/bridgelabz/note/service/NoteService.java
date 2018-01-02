@@ -37,10 +37,10 @@ public interface NoteService {
 	 * @param noteId
 	 * @return
 	 * get note by noteId
-	 *//*
+	 */
 	public NoteDetails getNoteById(int noteId);
 
-	*//**
+	/**
 	 * @param userDetails
 	 * @return
 	 * get all notes by userDetails

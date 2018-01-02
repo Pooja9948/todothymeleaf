@@ -28,19 +28,42 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="navbar-inner">
-					
-							<span onclick="toggleNav()" class="glyphicon glyphicon-align-justify"></span>
-							<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-							
-							</div>
-				
-							<button type="button" style="float: right; margin-top: 10px">
-								<a href="#" th:href="@{/logout}">Logout</a>
-							</button>
+						
+						  <a class="navbar-brand" onclick="toggleNav()">
+							<span style="font-size: 25px; margin-left: 50%; cursor: pointer">&#9776;</span>
+ 						  </a>
+   						  <a class="navbar-brand">Google Keep</a>
+   						 
+						  <button class="navbar-brand" type="button" style="float: right">
+							<a href="#" th:href="@{/logout}">Logout</a>
+						  </button>
 					</div>
 				</div>
 			</div>
 		</div>
+		
+		
+		
+		<br /><br /><br /><br /><br /><br />
+		
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<div class="sideNav" id="sideNavContent">
+				
+				<span class="sidebar" type="button" data-toggle="modal" data-target="#myModal">Add-Note</span>
+				<ul >
+		<li ><a th:href="${'/home'}" class="sidebar">Notes</a></li>
+
+		<li><a th:href="${'/Reminder'}" class="sidebar">Reminder</a></li>
+		<li><a th:href="${'/Trash'}" class="sidebar">Trash</a></li>
+		<li><a th:href="${'/Archive'}" class="sidebar">Archive</a></li>
+		</ul>
+			</div>
+		</div>
+	</div>
+</div>
+		
 		
 		
 		<!-- <form th:action="@{/logout}" method="get">
@@ -48,17 +71,20 @@
 				type="Submit">Logout</button>
 		</form> -->
 
+
+
+
 		<div style="margin-top: 40px">
 			<div>
 				<div>
-					<span th:utext="${userName}"></span>
+					<span style="margin: 530px" th:utext="${userName}"></span>
 				</div>
 				<p class="admin-message-text text-center"
-					th:utext="${successMessage}"></p>
+					th:utext="${successMessage}"></p>	
 			</div>
 		</div>
 		<div class="container">
-			<button type="button" data-toggle="modal" data-target="#myModal">Add-Note</button>
+			
 
 			<div class="modal fade" id="myModal" role="dialog">
 				<div class="modal-dialog">
@@ -85,14 +111,15 @@
 		</div>
 
 
-		<div>
+		<div class="container" id="noteContainer">
+			<div style="margin-left: 120px;">
 			<h3>User Notes</h3>
-			<div th:each="note : ${notes}" class="card col-md-3">
+			<div  th:each="note : ${notes}" class="card col-md-3">
 				<div th:text="${note.title}"></div>
 				<div th:text="${note.description}"></div>
-				
-				<button th:onclick="'deleteNote('+ *{note.id} +')'">Delete</button>
-				<button type="button" data-toggle="modal" data-target="#myModal1">Edit</button>
+				<span class="glyphicon glyphicon-picture btn"></span>
+				<span class="glyphicon glyphicon-trash btn" th:onclick="'deleteNote('+ *{note.id} +')'"></span>
+				<span class="glyphicon glyphicon-edit btn" type="button" th:onclick="'editNote('+ *{note.id} +')'" data-toggle="modal" data-target="#myModal1"></span>
 				<div class="modal fade" id="myModal1" role="dialog">
 					<div class="modal-dialog">
 
@@ -100,7 +127,7 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title" >Edit Note</h4>
+								<h4 class="modal-title">Edit Note</h4>
 							</div>
 							<div class="modal-body">
 								<form action="#" th:action="@{/user/updateNote}"
@@ -115,7 +142,7 @@
 
 					</div>
 				</div>
-				
+				</div>
 			</div>
 		</div>
 

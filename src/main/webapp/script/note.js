@@ -10,6 +10,15 @@ function deleteNote(id) {
 	});
 
 }
+function editNote(id) {
+	console.log(id);
+	alert(id);
+	$.ajax({
+		type : 'POST',
+		url : "user/editNote/" + id,
+	});
+
+}
 function toggleNav() {
 	var sideNav = document.getElementById("sideNavContent").style.width;
 	if (sideNav == "0px") {
