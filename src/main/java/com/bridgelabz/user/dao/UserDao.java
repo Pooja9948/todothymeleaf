@@ -22,5 +22,5 @@ public interface UserDao {
 
 	public UserDetails getUserByEmail(String email);
 	
-	
+	public UserDetails getUserById(int id);
 }

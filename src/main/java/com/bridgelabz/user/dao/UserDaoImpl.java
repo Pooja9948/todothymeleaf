@@ -78,4 +78,11 @@ public class UserDaoImpl implements UserDao {
 		return user;
 
 	}
+	public UserDetails getUserById(int id) {
+		Session session = sessionFactory.openSession();
+		UserDetails userDetails = session.get(UserDetails.class, id);
+		System.out.println("User by id is: " + userDetails);
+		session.close();
+		return userDetails;
+	}
 }

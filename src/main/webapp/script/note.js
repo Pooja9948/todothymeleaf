@@ -41,3 +41,43 @@ function closeNav() {
 	document.getElementById("sideNavContent").style.width = "0px";
 	document.getElementById("noteContainer").style.marginLeft = "0px";
 }
+function archiveNote(id) {
+	
+	alert("AAAAA");
+	
+	console.log(id);
+	alert(id);
+	jQuery.ajax({
+		type : 'PUT',
+		url : "user/archiveNote/"+ id,
+		dataType: 'json',
+		success : function(jsondata) {  
+            console.log(jsondata); 
+            alert(jsondata['name']);
+        },
+        error : function() {
+            console.log("Error");
+        }
+	});
+
+}
+function trashNote(id) {
+	
+	alert("BBBB");
+	
+	console.log(id);
+	alert(id);
+	jQuery.ajax({
+		type : 'PUT',
+		url : "user/trashNote/"+ id,
+		dataType: 'json',
+		success : function(jsondata) {  
+            console.log(jsondata); 
+            alert(jsondata['name']);
+        },
+        error : function() {
+            console.log("Error");
+        }
+	});
+
+}

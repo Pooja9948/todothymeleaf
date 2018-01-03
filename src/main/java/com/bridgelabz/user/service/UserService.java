@@ -21,5 +21,7 @@ public interface UserService {
 	public UserDetails loginUser(UserDetails user);
 
 	public UserDetails getUserByEmail(String email);
+	
+	public UserDetails getUserById(int id);
 
 }
