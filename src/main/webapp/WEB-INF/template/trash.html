@@ -53,7 +53,7 @@
 				
 				<span class="sidebar" type="button" data-toggle="modal" data-target="#myModal">Add-Note</span>
 				<ul >
-		<li ><a th:href="@{'/user/home'}" class="sidebar">Notes</a></li>
+		<li ><a th:href="@{/user/home}" class="sidebar">Notes</a></li>
 
 		<li><a th:href="${'/Reminder'}" class="sidebar">Reminder</a></li>
 		<li><a th:href="@{/user/trashN}" class="sidebar">Trash</a></li>
@@ -117,32 +117,14 @@
 			<div  th:each="note : ${notes}" class="card col-md-3">
 				<div th:text="${note.title}"></div>
 				<div th:text="${note.description}"></div>
-				<span class="glyphicon glyphicon-picture btn"></span>
-				<span class="glyphicon glyphicon-trash btn" th:onclick="'deleteNote('+ *{note.id} +')'"></span>
-				<span class="glyphicon glyphicon-edit btn" type="button" th:onclick="'editNote('+ *{note.id} +')'" data-toggle="modal" data-target="#myModal1"></span>
-				<span class="glyphicon glyphicon-circle-arrow-down btn"></span>
-				<div class="modal fade" id="myModal1" role="dialog">
-					<div class="modal-dialog">
-
-						<!-- Modal content-->
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">Edit Note</h4>
-							</div>
-							<div class="modal-body">
-								<form action="#" th:action="@{/user/updateNote}"
-									th:object="${note}" method="POST">
-									<!-- <input type="hidden" th:name="id" th:field="*{id}"> -->
-									<input type="text" th:field="*{title}" th:attr="value = ${note.title}" th:name="name" th:id="name"/><br /> <input
-										type="text" th:field="*{description}" th:attr="value = ${note.description}" th:name="description" th:id="description"/><br /> <input
-										type="submit" th:value="submit" />
-								</form>	
-							</div>
-						</div>
-
-					</div>
-				</div>
+				
+				<span class="btn dropdown-toggle" id="menu1" data-toggle="dropdown"> <span
+												class="glyphicon glyphicon-option-vertical"></span></span>
+				<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="menu1" >
+						<li><a th:onclick="'deleteNote('+ *{note.id} +')'">Delete Forever</a></li>
+						<li><a th:onclick="'trashNote('+ *{note.id} +')'">Restore</a></li>
+				</ul>
+				
 				</div>
 			</div>
 		</div>

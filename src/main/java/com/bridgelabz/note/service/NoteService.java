@@ -131,4 +131,6 @@ public interface NoteService {
 	
 	int getUserByNoteId(int noteid);
 	public List<NoteDetails> getAllNotes(UserDetails user);
+	public List<NoteDetails> getArchiveNotes(UserDetails user);
+	public List<NoteDetails> getTrashNotes(UserDetails user);
 }

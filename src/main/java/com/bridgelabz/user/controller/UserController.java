@@ -1,7 +1,5 @@
 package com.bridgelabz.user.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bridgelabz.note.model.NoteDetails;
 import com.bridgelabz.note.service.NoteService;
 import com.bridgelabz.user.model.UserDetails;
 import com.bridgelabz.user.service.UserService;
@@ -94,7 +91,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/loginUser", method = RequestMethod.POST)
 	public ModelAndView checkLoginUser(@Valid UserDetails user,HttpSession session ,HttpServletRequest request) {
-		ModelAndView modelAndView = new ModelAndView();
+		
 		System.out.println("user id in login time --->"+user.getEmail());
 		UserDetails userDetails = userservice.getUserByEmail(user.getEmail());
 		System.out.println("userDetails in login time --->"+userDetails.getId());
@@ -105,19 +102,12 @@ public class UserController {
 		request.setAttribute("token", activeToken);
 		session.setAttribute("user", userDetails);
 		user = userservice.loginUser(user);
-		List<NoteDetails> notes=noteService.getAllNotes(user);
 		if(user!=null) {
-			modelAndView.addObject("note", new NoteDetails());
-			modelAndView.addObject("notes", notes);
-			modelAndView.addObject("successMessage", "User is logged in");
-			modelAndView.addObject("userName", "Welcome " + user.getFirstname() + " " + user.getLastname() + " (" + user.getEmail() + ")");
-			modelAndView.setViewName("homepage");
-			return modelAndView;
+			
+			return new ModelAndView("redirect:/user/home");
 		}else {
-			modelAndView.addObject("user", new UserDetails());
-			modelAndView.addObject("successMessage", "User is  not logged in");
-			modelAndView.setViewName("loginpage");
-			return modelAndView;
+			
+			return new ModelAndView("redirect:/user/home");
 		}
 	}
 }

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,7 +34,26 @@ public class NoteController {
 
 	@Autowired
 	UserService userservice;
-
+	
+	@RequestMapping(value="/home")
+	public ModelAndView home(HttpServletRequest request,HttpSession session)
+	{
+		ModelAndView modelAndView = new ModelAndView();
+		UserDetails user=(UserDetails) session.getAttribute("user");
+	
+		modelAndView.addObject("userName", "Welcome " + user.getFirstname() + " " + user.getLastname() + " (" + user.getEmail() + ")");
+		
+		modelAndView.setViewName("homepage");
+		modelAndView.addObject("user", user);
+		
+		NoteDetails note = new NoteDetails();
+		modelAndView.addObject("note", note);
+		
+		List<NoteDetails> notes = noteService.getAllNotes(user);
+		modelAndView.addObject("notes", notes);
+		return modelAndView;
+	}
+	
 	@RequestMapping(value = "/createNote", method = RequestMethod.POST)
 	public ModelAndView createNote(@Valid NoteDetails noteDetails,HttpSession session
 			) throws Exception {
@@ -47,14 +65,13 @@ public class NoteController {
 		noteDetails.setCreateddate(date);
 		noteDetails.setModifiedDate(date);
 		noteDetails.setUser(user1);
-		NoteDetails note = noteService.createNote(noteDetails);
-		List<NoteDetails> notes=noteService.getAllNotes(user1);
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("note", new NoteDetails());
+		noteService.createNote(noteDetails);
+		return new ModelAndView("redirect:/user/home");
+		/*modelAndView.addObject("note", new NoteDetails());
 		modelAndView.addObject("notes", notes);
 		modelAndView.addObject("userName", "Welcome " + user1.getFirstname() + " " + user1.getLastname() + " (" + user1.getEmail() + ")");
 		modelAndView.setViewName("homepage");
-		return modelAndView;
+		return modelAndView;*/
 	}
 	
 	@RequestMapping(value = "/deleteNote/{id}", method = RequestMethod.DELETE)
@@ -71,13 +88,14 @@ public class NoteController {
 		NoteDetails note = new NoteDetails();
 		note.setId(id);
 		System.out.println("id : " + id);
-		ModelAndView modelAndView = new ModelAndView();
+		
 		
 		noteService.deleteNote(id);
 		System.out.println("note is deleted");
-		modelAndView.addObject("note", new NoteDetails());
+		return new ModelAndView("redirect:/user/home");
+		/*modelAndView.addObject("note", new NoteDetails());
 		modelAndView.setViewName("homepage");
-		return modelAndView;
+		return modelAndView;*/
 	}
 	
 	@GetMapping(value="/editNote/{id}")
@@ -105,7 +123,7 @@ public class NoteController {
 		noteDetails.setUser(user1);
 		noteService.updateNote(noteDetails);
 		List<NoteDetails> notes=noteService.getAllNotes(user1);
-		ModelAndView modelAndView = new ModelAndView();
+		ModelAndView modelAndView = new ModelAndView("redirect:/user/home");
 		modelAndView.addObject("note", new NoteDetails());
 		modelAndView.addObject("notes", notes);
 		modelAndView.addObject("userName", "Welcome " + user1.getFirstname() + " " + user1.getLastname() + " (" + user1.getEmail() + ")");
@@ -114,39 +132,59 @@ public class NoteController {
 		
 	}
 	
-	@RequestMapping(value = "/archive", method = RequestMethod.GET)
+	@RequestMapping(value = "/archiveN", method = RequestMethod.GET)
 	public ModelAndView archive(HttpServletRequest request) {
 		System.out.println("inside archive url");
 		int user_id = (int) request.getAttribute("userId");
+		UserDetails user1=userservice.getUserById(user_id);
+		NoteDetails noteDetails=noteService.getNoteById(user_id);
+		List<NoteDetails> notes=noteService.getArchiveNotes(user1);
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("user", new UserDetails());
+		modelAndView.addObject("note", new NoteDetails());
+		modelAndView.addObject("notes", notes);
+		modelAndView.addObject("userName", "Welcome " + user1.getFirstname() + " " + user1.getLastname() + " (" + user1.getEmail() + ")");
 		modelAndView.setViewName("archive");
 		return modelAndView;
 	}
 	
-	@PutMapping(value="/archiveNote/{id}")
-	public ModelAndView archiveNote(@PathVariable int id,HttpSession session,HttpServletRequest request)
-	{
+	@RequestMapping(value = "/trashN", method = RequestMethod.GET)
+	public ModelAndView trash(HttpServletRequest request) {
+		System.out.println("inside trash url");
+		int user_id = (int) request.getAttribute("userId");
+		UserDetails user1=userservice.getUserById(user_id);
+		NoteDetails noteDetails=noteService.getNoteById(user_id);
+		List<NoteDetails> notes=noteService.getTrashNotes(user1);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("note", new NoteDetails());
+		modelAndView.addObject("notes", notes);
+		modelAndView.addObject("userName", "Welcome " + user1.getFirstname() + " " + user1.getLastname() + " (" + user1.getEmail() + ")");
+		modelAndView.setViewName("trash");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/archiveNote/{id}", method = RequestMethod.POST)
+	public ModelAndView archiveNote(@PathVariable("id") int id, HttpServletRequest request,HttpSession session) {
+	
 		System.out.println("inside archive note");
 		int user_id = (int) request.getAttribute("userId");
 		System.out.println("user id under archive note "+user_id+" note id "+id);
-		UserDetails user1=userservice.getUserById(user_id);
+		//UserDetails user1=userservice.getUserById(user_id);
 		NoteDetails noteDetails=noteService.getNoteById(id);
 		if(noteDetails.getArchived()==true)
 			noteDetails.setArchived(false);
 		else
 			noteDetails.setArchived(true);
 		noteService.updateNote(noteDetails);
-		List<NoteDetails> notes=noteService.getAllNotes(user1);
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("note", new NoteDetails());
+		//List<NoteDetails> notes=noteService.getAllNotes(user1);
+		return new ModelAndView("redirect:/user/home");
+		/*modelAndView.addObject("note", new NoteDetails());
 		modelAndView.addObject("notes", notes);
 		modelAndView.addObject("userName", "Welcome " + user1.getFirstname() + " " + user1.getLastname() + " (" + user1.getEmail() + ")");
 		modelAndView.setViewName("homepage");
-		return modelAndView;
+		return modelAndView;*/
 	}
 	
-	@PutMapping(value="/trashNote/{id}")
+	@RequestMapping(value="/trashNote/{id}", method = RequestMethod.PUT)
 	public ModelAndView trash(@PathVariable int id,HttpSession session,HttpServletRequest request)
 	{
 		System.out.println("inside trash note");
@@ -160,11 +198,33 @@ public class NoteController {
 			noteDetails.setTrash(true);
 		noteService.updateNote(noteDetails);
 		List<NoteDetails> notes=noteService.getAllNotes(user1);
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("note", new NoteDetails());
+		return new ModelAndView("redirect:/user/home");
+		/*modelAndView.addObject("note", new NoteDetails());
 		modelAndView.addObject("notes", notes);
 		modelAndView.addObject("userName", "Welcome " + user1.getFirstname() + " " + user1.getLastname() + " (" + user1.getEmail() + ")");
 		modelAndView.setViewName("homepage");
-		return modelAndView;
+		return modelAndView;*/
+	}
+	
+	@PutMapping(value="/makeCopyNote/{id}")
+	public ModelAndView makeCopy(@PathVariable int id,HttpSession session,HttpServletRequest request)
+	{
+		System.out.println("inside makeCopy note");
+		int user_id = (int) request.getAttribute("userId");
+		System.out.println("user id under makeCopy note "+user_id+" note id "+id);
+		UserDetails user1=userservice.getUserById(user_id);
+		NoteDetails noteDetails=noteService.getNoteById(id);
+		Date date = new Date();
+		noteDetails.setCreateddate(date);
+		noteDetails.setModifiedDate(date);
+		noteDetails.setUser(user1);
+		noteService.createNote(noteDetails);
+		List<NoteDetails> notes=noteService.getAllNotes(user1);
+		return new ModelAndView("redirect:/user/home");
+		/*modelAndView.addObject("note", new NoteDetails());
+		modelAndView.addObject("notes", notes);
+		modelAndView.addObject("userName", "Welcome " + user1.getFirstname() + " " + user1.getLastname() + " (" + user1.getEmail() + ")");
+		modelAndView.setViewName("homepage");
+		return modelAndView;*/
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bridgelabz.note.dao.NoteDao;
 import com.bridgelabz.note.model.NoteCollaborate;
@@ -38,5 +39,11 @@ public class NoteServiceImpl implements NoteService {
 	@Override
 	public NoteDetails getNoteById(int noteId) {
 		return noteDao.getNoteById(noteId);
+	}
+	public List<NoteDetails> getArchiveNotes(UserDetails user){
+		return noteDao.getArchiveNotes(user);
+	}
+	public List<NoteDetails> getTrashNotes(UserDetails user){
+		return noteDao.getTrashNotes(user);
 	}
 }

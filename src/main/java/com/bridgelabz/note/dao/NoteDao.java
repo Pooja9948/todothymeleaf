@@ -27,4 +27,6 @@ public interface NoteDao {
 	public void deleteNote(int noteId);
 	public void updateNote(NoteDetails noteDetails);
 	public NoteDetails getNoteById(int noteId);
+	public List<NoteDetails> getArchiveNotes(UserDetails user);
+	public List<NoteDetails> getTrashNotes(UserDetails user);
 }

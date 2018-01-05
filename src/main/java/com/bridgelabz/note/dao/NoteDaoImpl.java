@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.hibernate.criterion.Order;
 import com.bridgelabz.note.model.NoteDetails;
 import com.bridgelabz.user.model.UserDetails;
@@ -50,6 +51,8 @@ public class NoteDaoImpl implements NoteDao {
 		{
 			Criteria criteria = session.createCriteria(NoteDetails.class);
 			criteria.add(Restrictions.eq("userDetails", user));
+			criteria.add(Restrictions.eq("isArchived", false));
+			criteria.add(Restrictions.eq("isTrash", false));
 			criteria.addOrder(Order.desc("modifiedDate"));
 			List list = criteria.list();
 			return list;
@@ -113,5 +116,47 @@ public class NoteDaoImpl implements NoteDao {
 		Session session = sessionfactory.openSession();
 		NoteDetails note = session.get(NoteDetails.class, noteId);
 		return note;
+	}
+
+	@Override
+	public List<NoteDetails> getArchiveNotes(UserDetails user) {
+		Session session=sessionfactory.openSession();
+		try
+		{
+			Criteria criteria = session.createCriteria(NoteDetails.class);
+			criteria.add(Restrictions.eq("userDetails", user));
+			criteria.add(Restrictions.eq("isArchived", true));
+			criteria.addOrder(Order.desc("modifiedDate"));
+			List list = criteria.list();
+			return list;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return null;
+	}
+
+	@Override
+	public List<NoteDetails> getTrashNotes(UserDetails user) {
+		Session session=sessionfactory.openSession();
+		try
+		{
+			Criteria criteria = session.createCriteria(NoteDetails.class);
+			criteria.add(Restrictions.eq("userDetails", user));
+			criteria.add(Restrictions.eq("isTrash", true));
+			criteria.addOrder(Order.desc("modifiedDate"));
+			List list = criteria.list();
+			return list;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return null;
 	}
 }

@@ -18,6 +18,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script
+	src="https://connect.facebook.net/en_US/sdk.js"></script>
 
 </head>
 
@@ -53,11 +55,11 @@
 				
 				<span class="sidebar" type="button" data-toggle="modal" data-target="#myModal">Add-Note</span>
 				<ul >
-		<li ><a th:href="${'/home'}" class="sidebar">Notes</a></li>
+		<li ><a th:href="@{'/user/home'}" class="sidebar">Notes</a></li>
 
 		<li><a th:href="${'/Reminder'}" class="sidebar">Reminder</a></li>
-		<li><a th:href="${'/Trash'}" class="sidebar">Trash</a></li>
-		<li><a th:href="@{/user/archive}" class="sidebar">Archive</a></li>
+		<li><a th:href="@{/user/trashN}" class="sidebar">Trash</a></li>
+		<li><a th:href="@{/user/archiveN}" class="sidebar">Archive</a></li>
 		</ul>
 			</div>
 		</div>
@@ -84,8 +86,6 @@
 			</div>
 		</div>
 		<div class="container">
-			
-
 			<div class="modal fade" id="myModal" role="dialog">
 				<div class="modal-dialog">
 
@@ -102,10 +102,8 @@
 									type="text" th:field="*{description}" /><br /> <input
 									type="submit" th:value="submit" />
 							</form>
-							
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
@@ -121,7 +119,15 @@
 				<span class="glyphicon glyphicon-trash btn" th:onclick="'deleteNote('+ *{note.id} +')'"></span>
 				<span class="glyphicon glyphicon-edit btn" type="button" th:onclick="'editNote('+ *{note.id} +')'" data-toggle="modal" data-target="#myModal1"></span>
 				<span class="glyphicon glyphicon-circle-arrow-up btn" th:onclick="'archiveNote('+ *{note.id} +')'"></span>
-				<span class="glyphicon glyphicon-option-vertical btn" th:onclick="'archiveNote('+ *{note.id} +')'"></span>
+				<span class="btn dropdown-toggle" id="menu1" data-toggle="dropdown"> <span
+												class="glyphicon glyphicon-option-vertical"></span></span>
+				<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="menu1" style="margin-left: 204px;">
+						<li><a th:onclick="'trashNote('+ *{note.id} +')'">Trash</a></li>
+						<li><a th:onclick="'makeCopyNote('+ *{note.id} +')'">Make a Copy</a></li>
+						<!-- SOCIAL SHARE -->
+						<li><a th:onclick="'facebookShare(\''+ ${note.title} +'\',\''+ ${note.description} +'\');'">share</a></li>
+				</ul>						
+												
 				<div class="modal fade" id="myModal1" role="dialog">
 					<div class="modal-dialog">
 
