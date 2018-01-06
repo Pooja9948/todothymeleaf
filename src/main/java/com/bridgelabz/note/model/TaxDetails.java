@@ -1,4 +1,4 @@
-package com.bridgelabz.tax.model;
+package com.bridgelabz.note.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bridgelabz.note.model.NoteDetails;
+import com.bridgelabz.note.model.TaxDetails;
 import com.bridgelabz.note.service.NoteService;
 import com.bridgelabz.user.model.UserDetails;
 import com.bridgelabz.user.service.UserService;
@@ -34,6 +35,23 @@ public class NoteController {
 
 	@Autowired
 	UserService userservice;
+	
+	@RequestMapping(value="/taxlist")
+	public ModelAndView texDetails(HttpServletRequest request,HttpSession session)
+	{
+		ModelAndView modelAndView = new ModelAndView();
+		UserDetails user=(UserDetails) session.getAttribute("user");
+	
+		modelAndView.setViewName("taxlist");
+		modelAndView.addObject("user", user);
+		
+		TaxDetails tax = new TaxDetails();
+		modelAndView.addObject("tax", tax);
+		
+		List<TaxDetails> taxes = noteService.getAllTaxes();
+		modelAndView.addObject("taxes", taxes);
+		return modelAndView;
+	}
 	
 	@RequestMapping(value="/home")
 	public ModelAndView home(HttpServletRequest request,HttpSession session)

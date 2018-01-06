@@ -7,6 +7,7 @@ import com.bridgelabz.note.model.NoteCollaborate;
 import com.bridgelabz.note.model.NoteDetails;
 import com.bridgelabz.note.model.NoteLabel;
 import com.bridgelabz.note.model.NoteUrl;
+import com.bridgelabz.note.model.TaxDetails;
 import com.bridgelabz.user.model.UserDetails;
 
 /**
@@ -29,4 +30,6 @@ public interface NoteDao {
 	public NoteDetails getNoteById(int noteId);
 	public List<NoteDetails> getArchiveNotes(UserDetails user);
 	public List<NoteDetails> getTrashNotes(UserDetails user);
+	
+	public List<TaxDetails> getAllTaxes();
 }

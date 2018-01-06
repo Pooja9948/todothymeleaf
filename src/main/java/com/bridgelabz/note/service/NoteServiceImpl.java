@@ -10,6 +10,7 @@ import com.bridgelabz.note.dao.NoteDao;
 import com.bridgelabz.note.model.NoteCollaborate;
 import com.bridgelabz.note.model.NoteDetails;
 import com.bridgelabz.note.model.NoteLabel;
+import com.bridgelabz.note.model.TaxDetails;
 import com.bridgelabz.user.model.UserDetails;
 
 /**
@@ -46,4 +47,8 @@ public class NoteServiceImpl implements NoteService {
 	public List<NoteDetails> getTrashNotes(UserDetails user){
 		return noteDao.getTrashNotes(user);
 	}
+	public List<TaxDetails> getAllTaxes(){
+		return noteDao.getAllTaxes();
+	}
+	
 }

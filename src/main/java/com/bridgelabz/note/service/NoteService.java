@@ -6,6 +6,7 @@ import java.util.Set;
 import com.bridgelabz.note.model.NoteCollaborate;
 import com.bridgelabz.note.model.NoteDetails;
 import com.bridgelabz.note.model.NoteLabel;
+import com.bridgelabz.note.model.TaxDetails;
 import com.bridgelabz.user.model.UserDetails;
 
 /**
@@ -133,4 +134,6 @@ public interface NoteService {
 	public List<NoteDetails> getAllNotes(UserDetails user);
 	public List<NoteDetails> getArchiveNotes(UserDetails user);
 	public List<NoteDetails> getTrashNotes(UserDetails user);
+	
+	public List<TaxDetails> getAllTaxes();
 }

@@ -2,24 +2,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
+
 <title>Insert title here</title>
 </head>
 <body>
 	<div class="col-sm-3">
-                    <table class="table">
-                        <caption>Tax list</caption>
-                        <thead>
-                            <tr>
-                                <th scope="col">Doc Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="tax : ${taxes}">
-                                <td th:text="${tax.docName}">1</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+		<table class="table">
+			<caption>Tax list</caption>
+			<thead>
+				<tr>
+					<th scope="col">Doc Name</th>
+					<th scope="col">Amount</th>
+					<th scope="col">Tax</th>
+					<th scope="col">Tax Type</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="tax : ${taxes}">
+					<td th:text="${tax.docName}">1</td>
+					<td th:text="${tax.amount}">2</td>
+					<td th:text="${tax.tax}">3</td>
+					<td th:text="${tax.taxType}">4</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </body>
 </html>

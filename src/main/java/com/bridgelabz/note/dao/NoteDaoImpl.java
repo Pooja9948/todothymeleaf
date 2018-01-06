@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.hibernate.criterion.Order;
 import com.bridgelabz.note.model.NoteDetails;
+import com.bridgelabz.note.model.TaxDetails;
 import com.bridgelabz.user.model.UserDetails;
 
 /**
@@ -148,6 +149,23 @@ public class NoteDaoImpl implements NoteDao {
 			criteria.add(Restrictions.eq("userDetails", user));
 			criteria.add(Restrictions.eq("isTrash", true));
 			criteria.addOrder(Order.desc("modifiedDate"));
+			List list = criteria.list();
+			return list;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return null;
+	}
+	
+	public List<TaxDetails> getAllTaxes() {
+		Session session=sessionfactory.openSession();
+		try
+		{
+			Criteria criteria = session.createCriteria(TaxDetails.class);
 			List list = criteria.list();
 			return list;
 		}

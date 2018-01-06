@@ -124,7 +124,11 @@
 			<artifactId>json</artifactId>
 			<version>20090211</version>
 		</dependency>
-
+		   <dependency>
+            <groupId>org.xhtmlrenderer</groupId>
+            <artifactId>flying-saucer-pdf</artifactId>
+            <version>9.1.4</version>
+        </dependency>
 	</dependencies>
 
 	<build>
