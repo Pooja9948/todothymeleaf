@@ -120,7 +120,7 @@
 				<span class="glyphicon glyphicon-picture btn"></span>
 				<span class="glyphicon glyphicon-trash btn" th:onclick="'deleteNote('+ *{note.id} +')'"></span>
 				<span class="glyphicon glyphicon-edit btn" type="button" th:onclick="'editNote('+ *{note.id} +')'" data-toggle="modal" data-target="#myModal1"></span>
-				<span class="glyphicon glyphicon-circle-arrow-down btn"></span>
+				<span class="glyphicon glyphicon-circle-arrow-down btn" th:onclick="'archiveNote('+ *{note.id} +')'"></span>
 				<div class="modal fade" id="myModal1" role="dialog">
 					<div class="modal-dialog">
 

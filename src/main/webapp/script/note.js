@@ -7,7 +7,7 @@ function deleteNote(id) {
 	alert(id);
 	$.ajax({
 		type : 'DELETE',
-		url : "user/deleteNote/" + id,
+		url : "deleteNote/" + id,
 	});
 
 }
@@ -18,7 +18,7 @@ function editNote(id) {
 	alert(id);
 	$.ajax({
 		type : 'POST',
-		url : "user/editNote/" + id,
+		url : "editNote/" + id,
 	});
 
 }
@@ -73,7 +73,7 @@ function archiveNote(id) {
 	alert(id);
 	$.ajax({
 		type : 'POST',
-		url : "/user/archiveNote/" + id,
+		url : "archiveNote/" + id,
 	});
 
 }
@@ -87,7 +87,7 @@ function trashNote(id) {
 	alert(id);
 	jQuery.ajax({
 		type : 'PUT',
-		url : "/user/trashNote/" + id,
+		url : "trashNote/" + id,
 		dataType : 'json',
 		success : function(jsondata) {
 			console.log(jsondata);
